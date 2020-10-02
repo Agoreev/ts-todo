@@ -25,24 +25,12 @@ export const TodosPage: React.FC = () => {
   };
 
   const completeHandler = (id: number) => {
-    const toDoIdx: number = todos.findIndex((todo) => {
-      return todo.id === id;
-    });
-    const toDo: ITodo = todos.find((todo) => {
-      return todo.id === id;
-    })!;
-
-    const newTodo: ITodo = {
-      ...toDo,
-      completed: !toDo.completed,
-    };
-
-    const newTodos: ITodo[] = [
-      ...todos.slice(0, toDoIdx),
-      newTodo,
-      ...todos.slice(toDoIdx + 1),
-    ];
-    setTodos(newTodos);
+    setTodos(prev => prev.map(todo => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed
+      }
+      return todo;
+    }));
   };
 
   const deleteHandler = (id: number) => {
